@@ -1,0 +1,58 @@
+{
+    "build": {
+        "auto_merge": false,
+        "branch": "master",
+        "build_failure_email_sent": null,
+        "created_at": "2013-12-12T06:55:31-08:00",
+        "id": 18,
+        "on_success_script_log_file": {
+            "url": null
+        },
+        "project_id": 16,
+        "promoted": null,
+        "ref": "972e4a834d1d252a537abc9973aee386ceb2ab9f",
+        "state": "succeeded",
+        "target_name": null,
+        "updated_at": "2013-12-12T07:01:15-08:00",
+        "build_parts": [
+            {
+                "id": 311,
+                "kind": "spec",
+                "options": {
+                    "ruby": "2.0.0-p247"
+                },
+                "paths": [
+                    "spec/features/line_item_restart_complete_spec.rb",
+                    "spec/features/stage_and_suspend_button_spec.rb",
+                    "spec/features/buy_item_utc_time_zone_added_spec.rb"
+                ],
+                "retry_count": 0,
+                "last_build_attempt": {
+                    "finished_at": "2013-12-12T06:57:57-08:00",
+                    "id": 364,
+                    "started_at": "2013-12-12T06:55:37-08:00",
+                    "state": "passed"
+                }
+            },
+            {
+                "id": 312,
+                "kind": "spec",
+                "options": {
+                    "ruby": "2.0.0-p247"
+                },
+                "paths": [
+                    "spec/features/ad_units_message_logs_spec.rb",
+                    "spec/features/invalid_utf8_spec.rb",
+                    "spec/features/ad_units_index_spec.rb"
+                ],
+                "retry_count": 0,
+                "last_build_attempt": {
+                    "finished_at": "2013-12-12T06:57:53-08:00",
+                    "id": 365,
+                    "started_at": "2013-12-12T06:55:38-08:00",
+                    "state": "failed"
+                }
+            }
+        ]
+    }
+}
