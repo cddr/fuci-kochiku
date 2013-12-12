@@ -68,10 +68,46 @@ module Fuci
         end
         resp
       end
+
+      def rebuild
+      end
+
+      def build_status
+        :red
+      end
+    end
+
+    class Tester
+
+      # must return a boolean telling whether the
+      # log passed in indicates a failure made by
+      # the tester
+      def indicates_failure? log
+        true
+      end
+
+      # must return a command string to be executed
+      # by the system, e.g.
+      # "rspec ./spec/features/it_is_cool_spec.rb"
+      def command log
+        test_command=""
+
+        log.scan(/^.*#([^\n]*)\n.*\#\ \.([^\n]*)\:/m).each do |data|
+           test_command+="spec " if test_command.empty?
+           test_command+=".#{data[1]},"
+        end
+
+        log.scan(/^.*#(\w+)\s?\[(.*)\]/).each do |data|
+          test_command+="ruby -Itest #{data[0]} -n #{data[1]};"
+        end
+
+        test_command
+      end
     end
   end
 
   configure do |fu|
     fu.server = ::Fuci::Kochiku::Server
   end
+
 end
