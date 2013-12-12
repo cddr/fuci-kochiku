@@ -1,0 +1,19 @@
+Failures:
+
+  1) BuildArtifactsController#create should create a build artifact for the build attempt
+     Failure/Error: true.should eq false
+       
+       expected: false
+            got: true
+       
+       (compared using ==)
+     # ./spec/controllers/build_artifacts_controller_spec.rb:18:in `block (3 levels) in <top (required)>'
+
+Finished in 8.23 seconds
+342 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/controllers/build_artifacts_controller_spec.rb:11 # BuildArtifactsController#create should create a build artifact for the build attempt
+/Users/jenpage/.rbenv/versions/2.0.0-p0/bin/ruby -S rspec ./spec/controllers/build_artifacts_controller_spec.rb ./spec/controllers/build_attempts_controller_spec.rb ./spec/controllers/build_parts_controller_spec.rb ./spec/controllers/builds_controller_spec.rb ./spec/controllers/projects_controller_spec.rb ./spec/controllers/pull_requests_controller_spec.rb ./spec/controllers/repositories_controller_spec.rb ./spec/features/integration_spec.rb ./spec/helpers/application_helper_spec.rb ./spec/helpers/build_helper_spec.rb ./spec/jobs/build_partitioning_job_spec.rb ./spec/jobs/build_state_update_job_spec.rb ./spec/lib/build_strategies/production_build_strategy_spec.rb ./spec/lib/git_automerge_spec.rb ./spec/lib/git_blame_spec.rb ./spec/lib/git_repo_spec.rb ./spec/lib/github_commit_status_spec.rb ./spec/lib/github_post_receive_hook_spec.rb ./spec/lib/partitioner_spec.rb ./spec/lib/secrets_spec.rb ./spec/lib/settings_accessor_spec.rb ./spec/mailers/auto_merge_mailer_spec.rb ./spec/mailers/build_mailer_spec.rb ./spec/models/build_artifact_spec.rb ./spec/models/build_attempt_spec.rb ./spec/models/build_part_spec.rb ./spec/models/build_spec.rb ./spec/models/project_spec.rb ./spec/models/remote_server/github_spec.rb ./spec/models/remote_server/stash_spec.rb ./spec/models/repository_observer_spec.rb ./spec/models/repository_spec.rb failed
+LM-BOS-00871909:kochiku jenpage$
