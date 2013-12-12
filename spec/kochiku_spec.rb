@@ -1,10 +1,12 @@
-# describe Fuci::Kochiku::Server do
+require 'fuci/kochiku'
+require 'minitest/autorun'
 
-#   before do
-#     @server = Fuci::Kochiku::Server.new
-#   end
+describe Fuci do
+  before do
+    @server = Fuci::Kochiku::Server.new
+  end
 
-#   it "gets the build status" do
-#     @server.build_status.must_equal :red
-#   end
-# end
+  it "gets the build status" do
+    @server.build_status.must_equal :red
+  end
+end
