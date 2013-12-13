@@ -4,6 +4,33 @@ require 'fuci/git'
 require 'httparty'
 
 module Fuci
+
+  def self.remote_build?
+    File.exists?("/tmp/kochiku-last-build")
+  end
+
+  def self.remote_build_uri
+    File.read(build_file)
+  end
+
+  def self.run
+    if remote_build?
+      puts "Found remote build..."
+      # @server = Fuci::Kochiku::Server.new(remote_build_url)
+      # @tester = Fuci::Kochiku::Tester.new
+      # log = @server.fetch_log
+      # if @tester.indicates_failure? log
+      #   puts @tester.command log
+      # else
+      #   puts "Remote build passed. Yipee"
+      # end
+    else
+      puts "Triggering build on kochiku..."
+      @server = Fuci::Kochiku::Server.new(nil)
+      @server.build
+    end
+  end
+
   module Kochiku
     class Server
       include HTTParty
@@ -12,6 +39,10 @@ module Fuci
       KOCHIKU_BASE = "http://kochiku-server-41925.phx-os1.stratus.dev.ebay.com"
 
       attr_accessor :last_build
+
+      def initialize(last_build)
+        @last_build = last_build
+      end
 
       def repo_url
         `git config --get remote.origin.url`.strip
@@ -61,6 +92,7 @@ module Fuci
       end
 
       def build
+        puts "triggering build: #{build_options}"
         resp = self.class.post "#{KOCHIKU_BASE}/projects/cm22222/builds", build_options
         File.open('/tmp/kochiku-last-build', 'w') do |f|
           @last_build = resp['location']
