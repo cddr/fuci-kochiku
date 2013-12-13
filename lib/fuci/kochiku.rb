@@ -2,7 +2,6 @@ require 'fuci'
 require 'fuci/configurable'
 require 'fuci/git'
 require 'httparty'
-require 'libarchive'
 
 module Fuci
   module Kochiku
@@ -36,6 +35,31 @@ module Fuci
         }
       end
 
+      def build_status
+        raise NotImplementedYet
+      end
+
+      def test_stdout_uri (build, part, attempt)
+        "#{KOCHIKU_BASE}/log_files/cm22222/build_#{build}/part_#{part}/attempt_#{attempt}/stdout.log.gz"
+      end
+
+      def fetch_log
+        resp = JSON.parse(self.class.get @last_build)
+
+        stdouts = resp['build']['build_parts'].collect do |part|
+          attempt = part['last_build_attempt']
+          stdout_uri = test_stdout_uri(resp['build']['id'], part['id'], attempt['id'])
+          if attempt['state'] != 'success'
+            response = self.class.get(stdout_uri)
+            response.body
+          end
+        end.compact
+
+        stdouts.collect do |log|
+          Zlib::GzipReader.new(StringIO.new(log)).read
+        end.join("\n")
+      end
+
       def build
         resp = self.class.post "#{KOCHIKU_BASE}/projects/cm22222/builds", build_options
         File.open('/tmp/kochiku-last-build', 'w') do |f|
@@ -51,17 +75,8 @@ module Fuci
       def build_status
         :red
       end
-
-      def fetch_log
-        puts log
-        Zlib::GzipReader.open(log) do |gz|
-          gz.each_line do |line|
-            puts line
-          end
-        end
-      end
     end
- 
+
     class Tester
 
       # must return a boolean telling whether the
@@ -78,7 +93,7 @@ module Fuci
         test_command=""
 
         log.scan(/^.*#([^\n]*)\n.*\#\ \.([^\n]*)\:/m).each do |data|
-           test_command+="spec " if test_command.empty? 
+           test_command+="spec " if test_command.empty?
            test_command+=".#{data[1]},"
         end
 
